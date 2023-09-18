@@ -1,4 +1,4 @@
-# operating_systems_IU
+# Operating_Systems_IU
 This repo contains my solutions for Operating systems course at Innopolis University - Fall 2023
 Current progress:
 
