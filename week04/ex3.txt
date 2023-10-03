@@ -1,0 +1,12 @@
+We notice at n = 3 the code call fork() three times in the for loop,
+so the later iteration every child will have a child processes.
+when the for ends a tree of processes will be generated and will have 
+[2^3] or 8 processes.
+
+The same way at n= 5 the code call fork() five times in for loop, 
+so the later  iteration every child will have a chid processes.
+when the for loop ends  tree of processes will be generated and will have 
+[2^5] or 32 processes.
+
+the only is the n value which determine the for loop iteration which calls the fork() and also how many
+sub-processes the code will create.
