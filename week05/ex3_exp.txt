@@ -1,0 +1,24 @@
+this code explored the impact of thread count (m) on the performance of a multi-threaded
+prime counting program, which calculates prime numbers in the range [0, n).
+
+
+one thread : the program with one thread established performance
+directly affected by the range n. Execution time increased with larger n.
+
+two threads : when using two threads showed performance improvement, 
+the work was divided to two parts and executed concurrently, beneficial for larger n.
+
+four threads : when dividing the work to four threads reduced execution time,
+especially for larger n. Smaller n showed less improvements due to thread management.
+
+ten threads : increase threads to ten continued to enhance performance, primarily for larger n.
+for smaller n, the overhead of thread management limited improvements.
+
+one hundred threads : when using a high thread number, 100 in this case,
+introduced huge thread management overhead, resulting in only marginal performance,
+particularly for smaller n.
+
+finally, choosing an optimal thread count is crucial for multi-threaded programs.
+it increases performance, especially for larger problem sizes. however,
+excessive thread usage can lead to diminishing returns due to increased overhead,
+which is notable for smaller problem sizes.

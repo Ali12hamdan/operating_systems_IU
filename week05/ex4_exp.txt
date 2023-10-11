@@ -1,0 +1,17 @@
+work distribution: in exercise 4, the approach dynamically assigns work to threads,
+ avoiding fixed intervals. This thing can lead to improved load balancing.
+
+thread synchronization: the use of mutexes ensures that no two threads check the same integer,
+ minimizing contention and eliminating race conditions.
+
+txecution time: execution time can vary, but this approach may outperform exercise 3,
+ particularly for larger n, thanks to better load distribution.
+
+optimal threads: just as in exercise 3, choosing the right number of threads is crucial
+ for performance optimization.
+
+mutex overhead: While mutexes ensure safety, they introduce synchronization overhead,
+ which can become noticeable with more threads or larger n.
+
+in summary, this approach offers flexible work distribution and robust thread synchronization.
+ it can provide efficient parallel execution, but careful thread count and mutex management are essential for optimal performance.

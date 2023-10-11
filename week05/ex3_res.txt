@@ -1,0 +1,30 @@
+Testing with m = 1...
+Total primes in [0, 10000000) = 664579
+real	0m7.777s
+user	0m7.742s
+sys	0m0.008s
+
+Testing with m = 2...
+Total primes in [0, 10000000) = 664579
+real	0m4.813s
+user	0m7.746s
+sys	0m0.008s
+
+Testing with m = 4...
+Total primes in [0, 10000000) = 664579
+real	0m3.848s
+user	0m11.944s
+sys	0m0.008s
+
+Testing with m = 10...
+Total primes in [0, 10000000) = 664579
+real	0m3.542s
+user	0m13.468s
+sys	0m0.012s
+
+Testing with m = 100...
+Total primes in [0, 10000000) = 664579
+real	0m3.591s
+user	0m13.702s
+sys	0m0.032s
+
