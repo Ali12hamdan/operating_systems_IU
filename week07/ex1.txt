@@ -1,0 +1,29 @@
+first:
+Throughput: 103.48 queries per second
+worst:
+Throughput: 94.59 queries per second
+best:
+Throughput: 68.88 queries per second
+
+
+
+
+"First" Algorithm: Throughput of 103.48 queries per second
+This suggests that the "first" algorithm is capable of processing a relatively high number of queries per second.
+ It appears to be a strong performer in terms of processing speed and efficiency. It may have been designed to optimize processing
+  capabilities, possibly sacrificing other factors such as memory usage or complexity.
+
+"Worst" Algorithm: Throughput of 94.59 queries per second
+Despite being labeled as the "worst" algorithm, it's important to note that this throughput value is still relatively high,
+ indicating a decent level of efficiency. However, compared to the "first" algorithm, it falls slightly short in terms of processing speed. The "worst" algorithm might be an alternative implementation or version that did not perform as well as others in terms of throughput.
+
+"Best" Algorithm: Throughput of 68.88 queries per second
+The "best" algorithm, despite being labeled as the best, has the lowest throughput value among the three. This suggests that it 
+might be optimized for other factors, such as memory usage, energy efficiency, or complexity, sacrificing some speed in the process. 
+While it might not process queries as quickly as the other two, it could excel in other aspects that are valuable depending on the specific requirements of the system.
+
+In summary, while the "first" algorithm demonstrates the highest throughput, it's essential to consider that different algorithms 
+might prioritize different aspects of performance. The "worst" and "best" algorithms might be optimized for different trade-offs, 
+such as complexity, memory usage, or energy efficiency. The choice of which algorithm to use would depend on the specific requirements 
+and constraints of the system in question.
+
