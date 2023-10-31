@@ -15,7 +15,7 @@
 #endif
 
 int main() {
-    // Write the PID to /tmp/ex1.pid
+
     FILE *file = fopen("/tmp/ex1.pid", "w");
     if (file == NULL) {
         perror("Failed to open file");
@@ -24,8 +24,7 @@ int main() {
     fprintf(file, "%d", getpid());
     fclose(file);
 
-    // Generate random password
-    char password[9];  // 8 characters + null terminator
+    char password[9];  
     strcpy(password, "pass:");
     int fd = open("/dev/urandom", O_RDONLY);
     if (fd == -1) {
@@ -37,13 +36,12 @@ int main() {
         unsigned char rand_char;
         do {
             read(fd, &rand_char, 1);
-        } while (rand_char < 32 || rand_char > 126);  // Ensure it's a printable character
+        } while (rand_char < 32 || rand_char > 126);  
         password[i] = rand_char;
     }
-    password[8] = '\0';  // Null terminate the string
+    password[8] = '\0';  
     close(fd);
 
-    // Store the password in memory using mmap
     char *addr = mmap(NULL, 9, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
     if (addr == MAP_FAILED) {
         perror("mmap failed");
@@ -51,7 +49,6 @@ int main() {
     }
     strcpy(addr, password);
 
-    // Wait in an infinite loop
     while (1) {
         sleep(1);
     }

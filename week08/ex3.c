@@ -9,7 +9,7 @@ int main() {
     struct rusage usage;
 
     for (int i = 0; i < 10; i++) {
-        // Allocate 10MB of memory
+
         char *buffer = (char *)malloc(10 * 1024 * 1024);
 
         if (buffer == NULL) {
@@ -17,14 +17,11 @@ int main() {
             return 1;
         }
 
-        // Fill it with zeros
         memset(buffer, 0, 10 * 1024 * 1024);
 
-        // Print memory usage using getrusage
         getrusage(RUSAGE_SELF, &usage);
         printf("Memory usage: %ld kilobytes\n", usage.ru_maxrss);
 
-        // Sleep for 1 second
         sleep(1);
     }
 
