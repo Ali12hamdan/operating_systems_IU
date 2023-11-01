@@ -12,15 +12,12 @@ typedef struct {
     int referenced;
 } PTE;
 
-// Global variables
 PTE *page_table;
 int num_pages;
 int disk_accesses = 0;
 
 void handle_signal(int sig) {
-    // Placeholder for handling signals from MMU
     if (sig == SIGUSR1) {
-        // Implement logic for handling page faults, updating page table, etc.
         printf("Received SIGUSR1 from MMU.\n");
         disk_accesses++;
     }
@@ -35,10 +32,8 @@ int main(int argc, char *argv[]) {
     num_pages = atoi(argv[1]);
     pid_t mmu_pid = (pid_t) atoi(argv[2]);
 
-    // Set up signal handler
     signal(SIGUSR1, handle_signal);
 
-    // Create and initialize the page table
     int fd = open("/tmp/ex2/pagetable", O_RDWR | O_CREAT, 0666);
     if (fd == -1) {
         perror("Error opening file");
@@ -58,12 +53,10 @@ int main(int argc, char *argv[]) {
         page_table[i].referenced = 0;
     }
 
-    // Placeholder for main loop to handle signals and MMU requests
     while (1) {
-        pause();  // Wait for signals
+        pause();
     }
 
-    // Cleanup and exit
     printf("Total disk accesses: %d\n", disk_accesses);
     munmap(page_table, num_pages * sizeof(PTE));
     close(fd);

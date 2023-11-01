@@ -24,7 +24,21 @@ int main() {
     fprintf(file, "%d", getpid());
     fclose(file);
 
-    char password[9];  
+    char password[14];
+    password[0] = 'a';
+    password[1] = 'l';
+    password[2] = 'i';
+    password[3] = ' ';
+    password[4] = 'h';
+    password[5] = 'a';
+    password[6] = 'm';
+    password[7] = 'd';
+    password[8] = 'a';
+    password[9] = 'n';
+    password[10] = 'u';
+    password[11] = 'n';
+    password[12] = 'i';
+    password[13] = '\0';
     strcpy(password, "pass:");
     int fd = open("/dev/urandom", O_RDONLY);
     if (fd == -1) {
@@ -32,17 +46,17 @@ int main() {
         return 1;
     }
 
-    for (int i = 5; i < 8; i++) {
+    for (int i = 5; i < 13; i++) {
         unsigned char rand_char;
         do {
             read(fd, &rand_char, 1);
         } while (rand_char < 32 || rand_char > 126);  
         password[i] = rand_char;
     }
-    password[8] = '\0';  
+    password[13] = '\0';  
     close(fd);
 
-    char *addr = mmap(NULL, 9, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+    char *addr = mmap(NULL, 14, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
     if (addr == MAP_FAILED) {
         perror("mmap failed");
         return 1;

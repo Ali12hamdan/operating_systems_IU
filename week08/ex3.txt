@@ -1,7 +1,9 @@
 observations:
 the program's memory usage increased by approximately 10MB every second.
 the 'si' and 'so' fields in vmstat remained mostly at 0, indicating minimal swapping activity.
+
 depending on the available free memory, there might be occasional non-zero values in 'si' and 'so',
-    indicating some swapping activity.
+indicating some swapping activity.
+
 as the program keeps allocating memory without freeing it, if the available
-    memory becomes low, the system might start swapping more aggressively.
+memory becomes low, the system might start swapping more aggressively.

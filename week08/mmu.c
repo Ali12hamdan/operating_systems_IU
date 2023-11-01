@@ -23,7 +23,6 @@ int main(int argc, char *argv[]) {
     char *ref_string = argv[2];
     pid_t pager_pid = (pid_t) atoi(argv[3]);
 
-    // Open the mapped file
     int fd = open("/tmp/ex2/pagetable", O_RDWR);
     if (fd == -1) {
         perror("Error opening file");
@@ -37,22 +36,17 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    // Iterate over the reference string
     for (int i = 0; i < strlen(ref_string); i += 2) {
         char mode = ref_string[i];
         int page = ref_string[i + 1] - '0';
         
-        // Implement MMU logic based on the instructions...
 
-        // Placeholder for checking if the page is in RAM, handling page faults, etc.
         printf("Mode: %c, Page: %d\n", mode, page);
     }
 
-    // Close and unmap
     munmap(page_table, num_pages * sizeof(PTE));
     close(fd);
 
-    // Signal the pager
     kill(pager_pid, SIGUSR1);
 
     return 0;
