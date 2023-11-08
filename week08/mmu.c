@@ -38,19 +38,16 @@ int main(int argc, char *argv[]) {
     int fd;
     size_t pt_size = num_pages * sizeof(struct PTE);
 
-    // Set up signal handling for SIGCONT
     struct sigaction sa;
     memset(&sa, 0, sizeof(sa));
     sa.sa_handler = sigcont_handler;
     sigaction(SIGCONT, &sa, NULL);
 
-    // Open and map the page table file
     fd = open("/tmp/ex2/pagetable", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
     ftruncate(fd, pt_size);
     page_table = mmap(NULL, pt_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     close(fd);
 
-    // Initialize the page table
     for (int i = 0; i < num_pages; i++) {
         page_table[i].valid = false;
         page_table[i].frame = -1;
@@ -67,7 +64,6 @@ int main(int argc, char *argv[]) {
     }
     printf("-------------------------\n");
 
-    // Process the reference string
     for (int i = 0; reference_string[i] != '\0'; i += 2) {
         char mode = reference_string[i];
         int page = reference_string[i+1] - '0';
@@ -81,7 +77,7 @@ int main(int argc, char *argv[]) {
             while (!page_loaded);
             page_loaded = 0;
             page_table[page].valid = true;
-            page_table[page].frame = page; // For simplicity, let's assume frame number is same as page number
+            page_table[page].frame = page; 
         }
 
         if (mode == 'W') {
@@ -89,7 +85,6 @@ int main(int argc, char *argv[]) {
             page_table[page].dirty = true;
         }
 
-        // Print the page table
         printf("Page table\n");
         for (int j = 0; j < num_pages; j++) {
             printf("Page %d ---> valid=%d, frame=%d, dirty=%d, referenced=%d\n",
@@ -98,7 +93,6 @@ int main(int argc, char *argv[]) {
         printf("-------------------------\n");
     }
 
-    // Signal the pager process one last time
     kill(pager_pid, SIGUSR1);
     munmap(page_table, pt_size);
 

@@ -10,7 +10,7 @@
 #include <sys/stat.h>
 #include <time.h>
 
-#define PAGE_SIZE 8 // Define the size of each page/frame
+#define PAGE_SIZE 8 
 
 typedef struct PTE {
     bool valid;
@@ -19,12 +19,10 @@ typedef struct PTE {
     int referenced;
 } PTE;
 
-// Globals
 char **RAM = NULL;
 char **disk = NULL;
 int frames, pages;
 
-// Function prototypes
 void initialize_disk(int pages);
 void print_ram(int frames);
 void print_disk(int pages);
@@ -42,7 +40,6 @@ int main(int argc, char *argv[]) {
     frames = atoi(argv[1]);
     pages = atoi(argv[2]);
 
-    // Allocate memory for RAM
     RAM = (char **)malloc(frames * sizeof(char *));
     if (RAM == NULL) {
         perror("Memory allocation for RAM failed");
@@ -55,10 +52,9 @@ int main(int argc, char *argv[]) {
             cleanup();
             return EXIT_FAILURE;
         }
-        memset(RAM[i], 0, PAGE_SIZE + 1); // Initialize with zeroes
+        memset(RAM[i], 0, PAGE_SIZE + 1); 
     }
 
-    // Allocate memory for disk
     disk = (char **)malloc(pages * sizeof(char *));
     if (disk == NULL) {
         perror("Memory allocation for disk failed");
@@ -74,7 +70,6 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    // Initialize the disk with random messages
     initialize_disk(pages);
     print_disk(pages);
 
@@ -83,7 +78,6 @@ int main(int argc, char *argv[]) {
     size_t page_table_size = pages * sizeof(PTE);
     int fd;
 
-    // Open or create the page table file
     fd = open("/tmp/ex2/pagetable", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
     if (fd == -1) {
         perror("Error opening file");
@@ -91,7 +85,6 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    // Ensure the file is the correct size
     if (ftruncate(fd, page_table_size) == -1) {
         perror("Error setting file size");
         close(fd);
@@ -99,7 +92,6 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    // Map the file to memory
     page_table = mmap(NULL, page_table_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (page_table == MAP_FAILED) {
         perror("Error mapping file");
@@ -108,7 +100,6 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    // Initialize the page table entries to invalid
     for (int i = 0; i < pages; i++) {
         page_table[i].valid = false;
         page_table[i].frame = -1;
@@ -116,13 +107,11 @@ int main(int argc, char *argv[]) {
         page_table[i].referenced = 0;
     }
 
-    // Simulate page requests
     for (int i = 0; i < pages; i++) {
         simulate_page_request(page_table, i, mmu_pid);
         print_ram(frames);
     }
 
-    // Clean up
     munmap(page_table, page_table_size);
     close(fd);
     cleanup();
@@ -134,9 +123,9 @@ void initialize_disk(int pages) {
     srand(time(NULL));
     for (int i = 0; i < pages; i++) {
         for (int j = 0; j < PAGE_SIZE; j++) {
-            disk[i][j] = ' ' + (rand() % ('~' - ' ')); // Random printable character
+            disk[i][j] = ' ' + (rand() % ('~' - ' ')); 
         }
-        disk[i][PAGE_SIZE] = '\0'; // Null-terminate the string
+        disk[i][PAGE_SIZE] = '\0'; 
     }
 }
 
@@ -156,35 +145,27 @@ void print_disk(int pages) {
 
 void simulate_page_request(PTE *page_table, int page_number, pid_t mmu_pid) {
     if (!page_table[page_number].valid) {
-        // Set the referenced field to the PID of the MMU
         page_table[page_number].referenced = (int)mmu_pid;
-        // Simulate a page fault
         kill(mmu_pid, SIGUSR1);
-        pause(); // Wait for the SIGCONT from the pager
+        pause(); 
     }
-    // Here, after receiving SIGCONT, we would handle the page request.
-    // This is where you would add code to modify the page table to reflect
-    // the new state of the page in memory.
+    
 }
 
 void pager_load_page_to_ram(int page_number, int frame_number) {
-    // Copy the disk page to RAM
     strncpy(RAM[frame_number], disk[page_number], PAGE_SIZE);
 }
 
 void pager_write_page_to_disk(int page_number, int frame_number) {
-    // Copy the RAM frame to disk
     strncpy(disk[page_number], RAM[frame_number], PAGE_SIZE);
 }
 
 void cleanup() {
-    // Free RAM memory
     for (int i = 0; i < frames; i++) {
         free(RAM[i]);
     }
     free(RAM);
 
-    // Free disk memory
     for (int i = 0; i < pages; i++) {
         free(disk[i]);
     }
