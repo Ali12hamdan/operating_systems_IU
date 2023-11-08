@@ -1,15 +1,10 @@
 #!/bin/bash
 
-
-gcc -o mmu mmu.c
-gcc -o pager pager.c
-
-
-./pager <number_of_pages> $$ &
+./pager 4 2 &
 pager_pid=$!
 
+sleep 1
+./mmu 4 R0 R1 W1 R0 R2 W2 R0 R3 W2 $pager_pid
 
-./mmu <number_of_pages> <reference_string> $pager_pid
+wait $pager_pid
 
-kill $pager_pid
-rm mmu pager
