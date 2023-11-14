@@ -48,4 +48,4 @@ echo "Retrieving file metadata and inode numbers for ex1.c"
 stat ex1.c
 ls -i ex1.c
 stat -c "%i" ex1.c
-
+#stat -c "%i" ex1.c
