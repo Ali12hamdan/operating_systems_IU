@@ -1,0 +1,9 @@
+created myfile1.txt in the monitored directory with "Hello world." content.
+created two hard links myfile11.txt and myfile12.txt to myfile1.txt.
+found all hard links to myfile1.txt and printed their inode numbers and paths.
+moved myfile1.txt to /tmp/myfile1.txt and modified myfile11.txt.
+observed that modifying myfile11.txt was reported by monitor.c as a modification event.
+created a symbolic link myfile13.txt in the monitored directory to /tmp/myfile1.txt.
+modified the file /tmp/myfile1.txt, but no event was reported for myfile13.txt by monitor.c.
+removed all duplicates of hard links to myfile11.txt in the monitored directory.
+after removal, the number of links decreased, indicating that hard links were successfully unlinked.
