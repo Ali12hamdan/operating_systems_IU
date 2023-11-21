@@ -40,3 +40,5 @@ home
 boot
 opt
 
+
+findings: when running the same programe and comparing the output we realize that they are different roots.
